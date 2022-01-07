@@ -4,13 +4,11 @@ import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 class DishDetail extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {};
   }
 
   render() {
-    const clickedDish = this.props.selectedDish;
-    console.log(clickedDish);
+    const clickedDish = this.props.dish;
+    // console.log(this.props.dish);
     if (clickedDish != null) {
       return (
         <div className="row">
@@ -34,7 +32,12 @@ class DishDetail extends Component {
                 <div>
                   <p>{elem.comment}</p>
                   <p>
-                    -- {elem.author}, {elem.date.substring(0, 10)}
+                    -- {elem.author},{" "}
+                    {new Intl.DateTimeFormat("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "2-digit",
+                    }).format(new Date(Date.parse(elem.date)))}
                   </p>
                 </div>
               );
