@@ -14,7 +14,7 @@ const RenderDish = ({ clickedDish }) => {
 };
 
 const RenderComments = ({ comments }) => {
-  comments.map((elem) => {
+  return comments.map((elem) => {
     return (
       <div>
         <p>{elem.comment}</p>
