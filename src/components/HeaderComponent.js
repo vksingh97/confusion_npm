@@ -124,7 +124,8 @@ class Header extends Component {
                   id="username"
                   name="username"
                   innerRef={(input) => (this.username = input)}
-                />
+                />{" "}
+                {/*Uncontrolled forms uses innerRef to get form values*/}
               </FormGroup>
               <FormGroup>
                 <Label htmlFor="password">Password</Label>
