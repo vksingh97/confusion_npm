@@ -14,7 +14,6 @@ import {
   Label,
   Row,
   Col,
-  FormGroup,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 
