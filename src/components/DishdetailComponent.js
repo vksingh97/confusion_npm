@@ -18,6 +18,7 @@ import {
 import { Link } from "react-router-dom";
 
 import { Control, LocalForm, Errors } from "react-redux-form";
+import { click } from "@testing-library/user-event/dist/click";
 
 const required = (val) => val && val.length;
 
@@ -32,8 +33,13 @@ class CommentForm extends Component {
     };
   }
   handleSubmitComment = (values) => {
-    console.log("current state: " + JSON.stringify(values));
-    alert(JSON.stringify(values));
+    this.toggleCommentModal();
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   };
 
   toggleCommentModal = () => {
@@ -132,21 +138,29 @@ class CommentForm extends Component {
 }
 
 export const RenderDish = ({ clickedDish }) => {
-  return (
-    <Card>
-      <CardImg width="100%" src={clickedDish.image} alt={clickedDish.name} />
-      <CardBody>
-        <CardTitle>{clickedDish.name}</CardTitle>
-        <CardText>{clickedDish.description}</CardText>
-      </CardBody>
-    </Card>
-  );
-};
-
-const RenderComments = ({ dish, comments }) => {
-  return comments.map((elem) => {
+  if (clickedDish != null) {
     return (
-      <div>
+      <div className="col-12 col-md-5 m-1">
+        <Card>
+          <CardImg
+            width="100%"
+            src={clickedDish.image}
+            alt={clickedDish.name}
+          />
+          <CardBody>
+            <CardTitle>{clickedDish.name}</CardTitle>
+            <CardText>{clickedDish.description}</CardText>
+          </CardBody>
+        </Card>
+      </div>
+    );
+  }
+};
+const RenderComments = ({ comments, addComment, dishId }) => {
+  if (comments == null) return <div></div>;
+  const cmnt = comments.map((elem) => {
+    return (
+      <li key={elem.id}>
         <p>{elem.comment}</p>
         <p>
           -- {elem.author},{" "}
@@ -156,9 +170,16 @@ const RenderComments = ({ dish, comments }) => {
             day: "2-digit",
           }).format(new Date(Date.parse(elem.date)))}
         </p>
-      </div>
+      </li>
     );
   });
+  return (
+    <div className="col-12 col-md-5 m-1">
+      <h4>Comments</h4>
+      <ul className="list-unstyled">{cmnt}</ul>
+      <CommentForm dishId={dishId} addComment={addComment} />
+    </div>
+  );
 };
 
 class DishDetail extends Component {
@@ -183,17 +204,13 @@ class DishDetail extends Component {
             </div>
           </div>
           <div className="row">
-            <div className="col-12 col-md-5 m-1">
-              <RenderDish clickedDish={this.props.dish} />
-            </div>
-            <div className="col-12 col-md-5 m-1">
-              <h4>Comments</h4>
-              <RenderComments
-                dish={this.props.dish}
-                comments={this.props.comments}
-              />
-              <CommentForm />
-            </div>
+            <RenderDish clickedDish={this.props.dish} />
+            <RenderComments
+              dish={this.props.dish}
+              comments={this.props.comments}
+              addComment={this.props.addComment}
+              dishId={this.props.dish.id}
+            />
           </div>
         </div>
       );
