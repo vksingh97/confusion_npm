@@ -18,7 +18,7 @@ import {
 import { Link } from "react-router-dom";
 
 import { Control, LocalForm, Errors } from "react-redux-form";
-import { click } from "@testing-library/user-event/dist/click";
+import { Loading } from "./LoadingComponent";
 
 const required = (val) => val && val.length;
 
@@ -188,7 +188,23 @@ class DishDetail extends Component {
   }
 
   render() {
-    if (this.props.dish != null) {
+    if (this.props.isLoading) {
+      return (
+        <div className="container">
+          <div className="row">
+            <Loading />
+          </div>
+        </div>
+      );
+    } else if (this.props.errMess) {
+      return (
+        <div className="container">
+          <div className="row">
+            <h4>{this.props.errMess}</h4>
+          </div>
+        </div>
+      );
+    } else if (this.props.dish != null) {
       return (
         <div className="container">
           <div className="row">
