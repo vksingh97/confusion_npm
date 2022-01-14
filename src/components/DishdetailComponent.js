@@ -16,7 +16,7 @@ import {
   Col,
 } from "reactstrap";
 import { Link } from "react-router-dom";
-
+import { baseUrl } from "../shared/baseUrl";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Loading } from "./LoadingComponent";
 
@@ -144,7 +144,7 @@ export const RenderDish = ({ clickedDish }) => {
         <Card>
           <CardImg
             width="100%"
-            src={clickedDish.image}
+            src={baseUrl + clickedDish.image}
             alt={clickedDish.name}
           />
           <CardBody>
