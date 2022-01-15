@@ -9,7 +9,6 @@ import {
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Control, Form, Errors } from "react-redux-form";
-import { actions } from "react-redux-form";
 
 const required = (val) => val && val.length;
 
@@ -21,11 +20,7 @@ const validEmail = (val) =>
   /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 class Contact extends Component {
-  constructor(props) {
-    super(props);
-
-    // this.handleSubmit = this.handleSubmit.bind(this);  //If bind method is not used, the function should be implemented to be an arrow fucntion
-  }
+  // this.handleSubmit = this.handleSubmit.bind(this);  //If bind method is not used, the function should be implemented to be an arrow fucntion
 
   handleSubmit = (values) => {
     console.log("current state: " + JSON.stringify(values));
